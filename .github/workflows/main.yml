@@ -1,0 +1,19 @@
+name: Update time cron job
+on:
+  schedule:
+    - cron: '10 4 * * *'
+  workflow_dispatch:
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Update date.txt
+        run: date '+%Y-%m-%d %H:%M:%S' > date.txt
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update date.txt
